@@ -16,27 +16,29 @@ function AiForm() {
   const [isLoading, setIsLoading] = React.useState(false)
   const [cardList, setCardList] = React.useState([])
   const [id, setId] = React.useState(0)
-  const [gptParams, setGptParams] = React.useState({
+  const [aiValues, setAiValues] = React.useState({
     prompt: '',
     maxTokens: 50,
+    temperature: 1.0,
   })
 
-  const updateGPTParams = (e) =>
-    setGptParams({ ...gptParams, [e.target.name]: e.target.value })
+  const updateAiValues = (e) =>
+    setAiValues({ ...aiValues, [e.target.name]: e.target.value })
 
   useEffect(() => {
     const fetchData = async () => {
-      if (gptParams.prompt) {
+      if (aiValues.prompt) {
         setIsLoading(true)
-        const res = await fetch('/api/gpt3', {
+        const res = await fetch('/api/generate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${process.env.OPENAI_SECRET}`,
           },
           body: JSON.stringify({
-            prompt: gptParams.prompt,
-            maxTokens: parseInt(gptParams.maxTokens),
+            prompt: aiValues.prompt,
+            maxTokens: parseInt(aiValues.maxTokens),
+            temperature: parseFloat(aiValues.temperature),
           }),
         })
         const data = await res.json()
@@ -44,13 +46,19 @@ function AiForm() {
         setIsLoading(false)
       }
     }
+    localStorage.setItem('aiValues', JSON.stringify(aiValues))
+    localStorage.setItem('results', JSON.stringify(results))
+    localStorage.setItem('cardList', JSON.stringify(cardList))
+    localStorage.setItem('id', JSON.stringify(id))
+    localStorage.setItem('prompt', JSON.stringify(aiValues.prompt))
+    localStorage.setItem('answer', JSON.stringify(results.text))
 
     fetchData()
-  }, [gptParams.prompt])
+  }, [aiValues.prompt])
 
   function handleSubmit(e) {
     e.preventDefault()
-    setCardList(cardList.concat([[id, gptParams.prompt, results.text]]))
+    setCardList(cardList.concat([[id, aiValues.prompt, results.text]]))
     setId(id + 1)
   }
 
@@ -76,13 +84,13 @@ function AiForm() {
                 <Input
                   borderColor={useColorModeValue('black', 'yellow')}
                   contentEditable={true}
-                  onChange={updateGPTParams}
+                  onChange={updateAiValues}
                   suppressContentEditableWarning={true}
                   type="text"
                   id="prompt"
                   name="prompt"
                   placeholder="A crafty question..."
-                  value={gptParams.prompt}
+                  value={aiValues.prompt}
                   required
                 />
                 <br />
@@ -93,14 +101,26 @@ function AiForm() {
                 <Select
                   borderColor={useColorModeValue('black', 'yellow')}
                   name="maxTokens"
-                  value={gptParams.maxTokens}
-                  onChange={updateGPTParams}
+                  value={aiValues.maxTokens}
+                  onChange={updateAiValues}
                 >
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="200">200</option>
-                  <option value="300">300</option>
-                  <option value="500">500</option>
+                  <option value="32">32</option>
+                  <option value="64">64</option>
+                  <option value="128">128</option>
+                  <option value="256">256</option>
+                  <option value="512">512</option>
+                </Select>
+                <Select
+                  borderColor={useColorModeValue('black', 'yellow')}
+                  name="temperature"
+                  value={aiValues.temperature}
+                  onChange={updateAiValues}
+                >
+                  <option value={0.2}>0.2</option>
+                  <option value={0.4}>0.4</option>
+                  <option value={0.6}>0.6</option>
+                  <option value={0.8}>0.8</option>
+                  <option value={1.0}>1.0</option>
                 </Select>
               </FormControl>
               <SubmitButton />
@@ -123,7 +143,6 @@ function AiForm() {
             <Heading as={'h3'} size={'section-title'}>
               Responses
             </Heading>
-            <br />
             <Heading as={'h3'} size={'section-title'}>
               {cardList
                 .map((card) => (
