@@ -81,7 +81,7 @@ function AiForm() {
                   type="text"
                   id="prompt"
                   name="prompt"
-                  placeholder="Product Name"
+                  placeholder="A crafty question..."
                   value={gptParams.prompt}
                   required
                 />
