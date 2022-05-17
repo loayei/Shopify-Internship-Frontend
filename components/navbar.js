@@ -56,7 +56,7 @@ const Navbar = (props) => {
           alignItems="center"
         >
           <Link
-            href="https://github.com/loayei/Shopify-Internship-Challenge"
+            href="https://github.com/loayei/Shopify-Internship-Frontend"
             passhref="true"
           >
             <Button>
