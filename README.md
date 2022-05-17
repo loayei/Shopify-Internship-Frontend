@@ -1,6 +1,6 @@
 # Shopify-Internship-Frontend
 
-- [**Challenge app**]([https://shopify-challenge-2021.vercel.app/](https://shopify-internship-frontend.vercel.app/))
+- [**Challenge app**](https://shopify-internship-frontend.vercel.app/)
 - [**Challenge specification**](https://docs.google.com/document/d/1O7mCynsz_cBXkEaCFGSZAuvAOY84QVq35l20xJwjOYg/edit)
 
 ## Local Build
