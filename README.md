@@ -12,8 +12,9 @@
 ## Features
 
 - Ask GPT-3 an AI developed by OpenAI any question.
-- Save their list of movies to **session storage**
-- The application will **automatically** order the responses from newest to oldest
+- Save their list of prompts and responses to **session storage**
+- Change the temperature and tokens count using a list
+- The application will **automatically** order the prompts and response from newest to oldest
 - Animations have been added
   - logo flippining
   - Dark and Light modes
