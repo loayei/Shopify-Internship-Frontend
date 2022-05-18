@@ -110,6 +110,10 @@ function AiForm() {
                   <option value="256">256</option>
                   <option value="512">512</option>
                 </Select>
+                <br />
+                <Heading as={'h3'} size={'section-title'}>
+                  Temperature
+                </Heading>
                 <Select
                   borderColor={useColorModeValue('black', 'yellow')}
                   name="temperature"

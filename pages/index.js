@@ -11,7 +11,11 @@ function Home() {
           <Heading as="h2" variant="page-title">
             Fun with AI
           </Heading>
-          <p> This Form &gt; Google</p>
+          <Heading as="h1" variant="page-title">
+            {' '}
+            This Form &gt; Google
+          </Heading>
+          <p> Hover on the logo for an animation </p>
         </Box>
 
         <Box
